@@ -75,6 +75,7 @@ namespace Coordinates
             y_2.Text = "";
             resulta.Text = "";
             resultdistance.Text = "";
+            pictureBox1.Invalidate();
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
@@ -82,6 +83,28 @@ namespace Coordinates
             Graphics g = e.Graphics;
             Pen pen = new Pen(Color.Red, 2);
             Font font = new Font("Arial", 8);
+            g.DrawLine(pen, 0, pictureBox1.Height / 2, pictureBox1.Width, pictureBox1.Height / 2);
+            g.DrawLine(pen, pictureBox1.Width / 2, 0, pictureBox1.Width / 2, pictureBox1.Height);
+
+            for (int i = 1; i < pictureBox1.Width / (20 * zoomFactor); i++)
+            {
+                int x = pictureBox1.Width / 2 + (int)(i * 20 * zoomFactor);
+                int y = pictureBox1.Height / 2;
+                g.DrawLine(pen, x, y - 5, x, y + 5);
+                g.DrawString((i).ToString(), font, Brushes.Black, x + 2, y + 5);
+                g.DrawLine(pen, pictureBox1.Width / 2 - (int)(i * 20 * zoomFactor), y - 5, pictureBox1.Width / 2 - (int)(i * 20 * zoomFactor), y + 5);
+                g.DrawString((-i).ToString(), font, Brushes.Black, pictureBox1.Width / 2 - (int)(i * 20 * zoomFactor) + 2, y + 5);
+            }
+
+            for (int i = 1; i < pictureBox1.Height / (20 * zoomFactor); i++)
+            {
+                int x = pictureBox1.Width / 2;
+                int y = pictureBox1.Height / 2 + (int)(i * 20 * zoomFactor);
+                g.DrawLine(pen, x - 5, y, x + 5, y);
+                g.DrawString((i).ToString(), font, Brushes.Black, x - 20, y + 2);
+                g.DrawLine(pen, x - 5, pictureBox1.Height / 2 - (int)(i * 20 * zoomFactor), x + 5, pictureBox1.Height / 2 - (int)(i * 20 * zoomFactor));
+                g.DrawString((-i).ToString(), font, Brushes.Black, x - 20, pictureBox1.Height / 2 - (int)(i * 20 * zoomFactor) + 2);
+            }
 
             if (double.TryParse(x_1.Text, out double x1) &&
                 double.TryParse(y_1.Text, out double y1) &&
@@ -91,30 +114,7 @@ namespace Coordinates
                 int startX = pictureBox1.Width / 2 + (int)(x1 * 20 * zoomFactor);
                 int startY = pictureBox1.Height / 2 - (int)(y1 * 20 * zoomFactor);
                 int endX = pictureBox1.Width / 2 + (int)(x2 * 20 * zoomFactor);
-                int endY = pictureBox1.Height / 2 - (int)(y2 * 20 * zoomFactor);
-
-                g.DrawLine(pen, 0, pictureBox1.Height / 2, pictureBox1.Width, pictureBox1.Height / 2);
-                g.DrawLine(pen, pictureBox1.Width / 2, 0, pictureBox1.Width / 2, pictureBox1.Height);
-
-                for (int i = 1; i < pictureBox1.Width / (20 * zoomFactor); i++)
-                {
-                    int x = pictureBox1.Width / 2 + (int)(i * 20 * zoomFactor);
-                    int y = pictureBox1.Height / 2;
-                    g.DrawLine(pen, x, y - 5, x, y + 5);
-                    g.DrawString((i).ToString(), font, Brushes.Black, x + 2, y + 5);
-                    g.DrawLine(pen, pictureBox1.Width / 2 - (int)(i * 20 * zoomFactor), y - 5, pictureBox1.Width / 2 - (int)(i * 20 * zoomFactor), y + 5);
-                    g.DrawString((-i).ToString(), font, Brushes.Black, pictureBox1.Width / 2 - (int)(i * 20 * zoomFactor) + 2, y + 5);
-                }
-
-                for (int i = 1; i < pictureBox1.Height / (20 * zoomFactor); i++)
-                {
-                    int x = pictureBox1.Width / 2;
-                    int y = pictureBox1.Height / 2 + (int)(i * 20 * zoomFactor);
-                    g.DrawLine(pen, x - 5, y, x + 5, y);
-                    g.DrawString((i).ToString(), font, Brushes.Black, x - 20, y + 2);
-                    g.DrawLine(pen, x - 5, pictureBox1.Height / 2 - (int)(i * 20 * zoomFactor), x + 5, pictureBox1.Height / 2 - (int)(i * 20 * zoomFactor));
-                    g.DrawString((-i).ToString(), font, Brushes.Black, x - 20, pictureBox1.Height / 2 - (int)(i * 20 * zoomFactor) + 2);
-                }
+                int endY = pictureBox1.Height / 2 - (int)(y2 * 20 * zoomFactor);            
 
                 if (x1 == x2)
                 {
